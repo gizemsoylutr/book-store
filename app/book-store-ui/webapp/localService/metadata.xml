@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="BookStore" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Books" EntityType="BookStore.Books">
+                    <NavigationPropertyBinding Path="author" Target="Authors"/>
+                </EntitySet>
+                <EntitySet Name="Authors" EntityType="BookStore.Authors">
+                    <NavigationPropertyBinding Path="book" Target="Books"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Books">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="author" Type="Collection(BookStore.Authors)" Partner="book"/>
+            </EntityType>
+            <EntityType Name="Authors">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="50"/>
+                <NavigationProperty Name="book" Type="BookStore.Books" Partner="author">
+                    <ReferentialConstraint Property="book_id" ReferencedProperty="id"/>
+                </NavigationProperty>
+                <Property Name="book_id" Type="Edm.Int32"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

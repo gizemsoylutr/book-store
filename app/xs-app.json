@@ -1,0 +1,12 @@
+{
+  "authenticationMethod": "route",
+  "welcomeFile": "/bookstoreui",
+  "routes": [
+    {
+      "source": "/book-store/(.*)",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    }
+  ]
+}
